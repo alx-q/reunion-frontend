@@ -1,0 +1,42 @@
+.navbar{
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    backdrop-filter: blur(30px);
+    z-index: 10;
+}
+
+.btn.btn-outline-primary {
+    padding: 5px 8px;
+    border: none;
+}
+
+.btn.btn-outline-primary.show {
+    background-color: rgba(128, 128, 128, 0.295);
+}
+
+.btn.btn-outline-primary>.mdi {
+    font-size: 22px;
+}
+
+.btn.btn-outline-primary.bouton-profil {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border: 2px solid;
+    margin-left: 11px;
+    background: url("/assets/img/profil.png") center / cover;
+}
+
+.btn.btn-outline-primary.bouton-profil::after{
+    display: none;
+}
+
+.btn.btn-primary {
+    margin: 0 6px;
+}
+
+.btn-outline-primary:hover{
+    background-color: rgb(216, 216, 216);
+}

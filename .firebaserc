@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "alex-tp22"
+  },
+  "targets": {
+    "alex-tp22": {
+      "hosting": {
+        "alexander": [
+          "alex-tp22"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

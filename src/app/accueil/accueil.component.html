@@ -1,0 +1,149 @@
+<div style="height: 59px;">
+
+</div>
+<main class="contenu">
+    <section class="section-hero">
+        <div class="section-flou">
+            <div class="d-flex gap-2 flex-column" style="position: absolute; right: 10px; top:0; padding: 30px">
+                <a href="#" class="lien-non" matTooltip="Facebook" matTooltipPosition="left"><span class="mdi mdi-facebook mdi-24px"></span></a>
+                <a href="#" class="lien-non" matTooltip="X" matTooltipPosition="left"><span class="mdi mdi-twitter mdi-24px"></span></a>
+                <a href="#" class="lien-non" matTooltip="YouTube" matTooltipPosition="left"><span class="mdi mdi-youtube mdi-24px"></span></a>
+                <a href="#" class="lien-non" matTooltip="Instagram" matTooltipPosition="left"><span class="mdi mdi-instagram mdi-24px"></span></a>
+                <a href="#" class="lien-non" matTooltip="Reddit" matTooltipPosition="left"><span class="mdi mdi-reddit mdi-24px"></span></a>
+                <a href="#" class="lien-non" matTooltip="Xbox Live" matTooltipPosition="left"><span class="mdi mdi-microsoft-xbox mdi-24px"></span></a>
+                <a href="https://github.com/alx-q" class="lien-non" matTooltip="GitHub" matTooltipPosition="left" target="_blank"><span
+                        class="mdi mdi-github mdi-24px"></span></a>
+            </div>
+            <div class="d-flex justify-content-between align-items-end"
+                style="position: absolute; left: 0; bottom: 0; right: 0; padding: 30px;">
+                <div>
+                    <img src="/assets/img/logo/logo-lg.png" alt="Logo" style="height: 130px">
+                    <h1 class="texte-poppins texte-principal">Alexander Tudose</h1>
+                    <p class="texte-poppins" i18n>Spécialiste en développement web</p>
+                </div>
+                <div class="d-flex flex-column align-items-center hero-savoir-plus">
+                    <p i18n>En savoir plus</p>
+                    <span class="mdi mdi-arrow-down mdi-36px"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="introduction">
+        <div class="section-contenu container-fluid">
+            <h1 class="text-center py-5" i18n>Introduction</h1>
+            <div class="row">
+                <div class="col-0 col-lg-3">
+                </div>
+                <div class="col-12 col-lg-6" style="  text-align: justify;
+                text-justify: inter-word;">
+                    <p class="px-3" i18n>Bonjour, je m'appelle Alexander Tudose.
+                        <br>
+                        <br>
+                        Je suis dans le programme Techniques de l'informatique au Cégep André-Laurendeau. Depuis
+                        que j'avais 14 ans, j'ai été passionné par l'informatique et la programmation plus
+                        spécifiquement
+                        après avoir joué avec le kit de robotique LEGO Mindstorms EV3, qui a été mon premier
+                        goût à de
+                        la programmation (LabVIEW).
+                        <br>
+                        Peu de temps après, je continue à découvrir d'autres langages de programmation, comme
+                        Scratch, ou HTML, CSS et JS.
+                        <br>
+                        <br>
+                        Ma passion principale est le Web, puisque je trouve c'est la plus facile et la plus
+                        belle façon de s'exprimer.
+                        J'adore monter mes propres designs et thèmes pour ajouter une touche de personnalité à
+                        mes sites. Non seulement ça,
+                        mais l'industrie du web est l'une des plus lucratives, avec Google ou Microsoft offrant
+                        une multitude de leurs services
+                        principalement sur le web.
+                        <br>
+                        <br>
+                        Mon choix de l'informatique comme programme au cégep n'est pas une coincidence, ce choix
+                        a été pris depuis longtemps ...
+                    </p>
+                </div>
+                <div class="col-0 col-lg-3">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="expertise">
+        <div class="section-contenu container-fluid">
+            <h1 class="text-center" i18n>Expertise de langages</h1>
+            <br>
+            <div class="row py-5 justify-content-center">
+                <div class="col-6 col-md-4 col-lg-2 text-center py-3" *ngFor="let langue of langages">
+                    <img src="/assets/img/lang/{{ langue.image }}" alt="" height="100">
+                    <p>{{ langue.nom }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="projets">
+        <div class="section-contenu container-fluid">
+            <h1 class="text-center" i18n>Projets</h1>
+            <div class="row py-5">
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                    <div class="card">
+                        <img src="/assets/img/projets/echecs.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h3 i18n>Jeu d'échecs en Java</h3>
+                            <p class="card-text" i18n>Un jeu d'échecs intélligent programmé en Java dans le cadre
+                                d'un exercice formatif en Programmation 2</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                    <div class="card">
+                        <img src="/assets/img/projets/jogger.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h3 i18n>Jeu Jogger</h3>
+                            <p class="card-text" i18n>Un jeu fait en HTML, CSS et Javascript dans le cadre du TPS de
+                                Web de la session 2</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-2">
+                    <div class="card">
+                        <img src="/assets/img/projets/coloratom.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h3>Color Atom</h3>
+                            <p class="card-text" i18n>Color Atom est un outil de séléction de couleurs robuste. C'est
+                                un projet personnel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background-color: #c5c5c5;" class="p-0" id="citations">
+        <div class="section-contenu container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-6 citation-section-gauche">
+                    <div class="citation-section-gauche-contenu">
+                        <span class="mdi mdi-comment-quote"></span>
+                        <h1 class="texte-poppins" i18n>Citations célèbres</h1>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div style="background-color: #0097ee;"
+                        class="d-flex align-items-center justify-content-center citation-section-droite-contenu">
+                        <div>
+                            <h2 i18n><span>“</span>Angular, c'est de la magie<span>”</span></h2>
+                            <p style="text-align: right;">&mdash; Alexondeur</p>
+                        </div>
+                    </div>
+                    <div style="background-color: #0066ff;"
+                        class="d-flex align-items-center justify-content-center citation-section-droite-contenu">
+                        <div>
+                            <h2 i18n><span>“</span>Le web, c'est de
+                                l'art<span>”</span></h2>
+                            <p style="text-align: right;">&mdash; Alexondeur</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

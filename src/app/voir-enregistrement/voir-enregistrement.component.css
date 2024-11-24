@@ -1,0 +1,32 @@
+.contenu{
+    background-color: #dffff3;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("/assets/img/pages/invite.jpg") center/cover;
+    backdrop-filter: blur(20px);
+}
+
+.animation-apparition{
+    animation: apparition 1s ease-in forwards;
+}
+
+@keyframes apparition {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+button.btn.btn-primary{
+    background-color: #009688; 
+    border-color:#009688;
+}
+
+.btn.btn-outline-primary{
+    color: #009688;
+    border: 1px solid #009688;
+}
+
+.container {
+    max-width: 1000px;
+}

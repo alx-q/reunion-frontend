@@ -1,0 +1,106 @@
+<div class="contenu">
+    <div class="container">
+        <div>
+            <div class="espacement-page-carte"></div>
+            <h5 class="pb-2 px-1"><span> Mes Messages</span></h5>
+            <div class="card carte-interactive container pl-0">
+                <div class="d-flex">
+                    <div class="carte-interactive-banniere" style="background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('/assets/img/pages/lecture-msg.jpg') center/cover;">
+                        <span class="mdi mdi-message"></span>
+                    </div>
+                    <div class="row w-100 h-100">
+                        <div class="col-12 col-md-6">
+                            <div class="py-4 px-2" style="padding-left: 20px !important; position: relative;">
+                                <div *ngIf="estConnecte == false" class="alerte-centre">
+                                    <div>
+                                        <span class="mdi mdi-account-alert mdi-48px"></span>
+                                        <h4>Accès non autorisé</h4>
+                                        <p>Veuillez s'il vous plaît vous connecter pour continuer</p>
+                                    </div>
+                                </div>
+                                <div *ngIf="chargement == true" class="p-3 alerte-centre" style="position: absolute; top:0; left:0; bottom:0; right:0; backdrop-filter: blur(30px);">
+                                    <div class="spinner-border text-primary" role="status"></div>
+                                </div>
+                                <div class="list-group" *ngIf="lesMessages && estConnecte == true">
+                                    <div *ngIf="lesMessages.data[0] == null" class="alerte-centre">
+                                        <div>
+                                            <span class="mdi mdi-message mdi-48px"></span>
+                                            <h4>Aucun Message</h4>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="lesMessages.data[0] != null">
+                                        <div *ngFor="let message of lesMessages.data; index as i;"
+                                            (click)="changerMessageCourant(i)"
+                                            class="list-group-item list-group-item-action "
+                                            [class.active]="i === indexMessageCourant" aria-current="true">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <img src="/assets/img/profiles/{{ message.prenom.charAt(0).toLowerCase() }}.png" class="image-profil" alt="Image Profil">
+                                                <div class="flex-grow-1">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h5 class="m-0">{{ message.prenom + " " + message.nom }}</h5>
+                                                        <small>Il y a {{ calculerJours(message.create_date) }} jours</small>
+                                                    </div>
+    
+                                                    <small *ngIf="message.message.length > 60" class="text-muted">{{
+                                                        message.message.substring(0,60) }} ...</small>
+                                                    <small *ngIf="message.message.length <= 60" class="text-muted">{{
+                                                        message.message }}</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-mini text-muted pt-2 px-2"><span
+                                                class="mdi mdi-cursor-default-outline"></span> Cliquer sur le message désiré
+                                            pour le lire</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 carte-interactive-contenu"
+                            style="background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('/assets/img/pages/voirmessage.jpg') center/cover; box-sizing: border-box;">
+    
+                            <div *ngIf="messageCourant" class="p-2 pb-4">
+                                <div class="d-flex align-items-center gap-2 pb-2">
+                                    <h5 class="px-1 py-3 flex-grow-1 m-0">{{ messageCourant.prenom }} vous a envoyé un
+                                        message</h5>
+                                    <a href="mailto:{{ messageCourant.email }}" class="btn btn-primary py-1 px-2 m-0" matTooltip="Répondre"><span
+                                            class="mdi mdi-reply"></span></a>
+                                    <button class="btn btn-primary py-1 px-2 m-0" matTooltip="Copier Message" (click)="copierMessage()"><span
+                                            class="mdi mdi-content-copy"></span></button>
+                                    <!--button class="btn btn-danger py-1 px-2 m-0" matTooltip="Supprimer"><span
+                                            class="mdi mdi-delete"></span></button-->
+                                </div>
+    
+                                <div class="card p-3">
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td style="width: 150px;"><small>Nom</small></td>
+                                                <td><img src="/assets/img/profiles/{{ messageCourant.prenom.charAt(0).toLowerCase() }}.png" class="image-profil-mini" alt="Image Profil">
+                                                    <small>{{ messageCourant.prenom + " " + messageCourant.nom }}</small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><small>Courriel</small></td>
+                                                <td><small>{{ messageCourant.email }}</small></td>
+                                            </tr>
+                                            <tr>
+                                                <td><small>Date de l'envoi</small></td>
+                                                <td><small>{{ formatterDate(messageCourant.create_date) }}</small></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p style="min-height: 340px;">{{ messageCourant.message }}</p>
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>

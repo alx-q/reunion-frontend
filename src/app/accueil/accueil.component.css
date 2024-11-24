@@ -1,0 +1,78 @@
+.contenu{
+    background-color:#e3f2fd ;
+}
+
+section.section-hero{
+    background: linear-gradient(transparent, rgba(0,0,0,0.5)), url('/assets/img/pages/home2.gif') center / cover;
+    padding: 0;
+    color: white;
+}
+
+section.section-hero > .section-flou{
+    padding: 20px;
+    backdrop-filter: blur(0px) hue-rotate(320deg);
+    height: 100%;
+    min-height: calc(100vh - 59px);
+}
+
+.hero-savoir-plus > p{
+    text-orientation: mixed; 
+    writing-mode: vertical-lr;
+    font-weight: 700;
+    font-size: 22px;
+}
+
+.texte-principal{
+    font-weight: 700; 
+    font-size: 80px;
+}
+
+@media screen and (max-width: 768px) {
+    .texte-principal{
+        font-weight: 700; 
+        font-size: 40px;
+    }
+}
+
+
+.citation-section-gauche {
+    position: relative;
+    min-height: 300px;
+}
+
+.citation-section-gauche>.citation-section-gauche-contenu {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px 20px;
+}
+
+.citation-section-gauche>.citation-section-gauche-contenu>.mdi {
+    font-size: 100px;
+}
+
+.citation-section-droite-contenu {
+    font-family: poppins;
+    color: white;
+    height: 250px;
+    padding: 10px;
+}
+
+.citation-section-droite-contenu>div>h2>span {
+    font-family: roboto;
+    font-size: 70px;
+}
+
+@media screen and (max-width: 720px) {
+    .citation-section-droite-contenu {
+        height: 150px;
+    }
+
+    .citation-section-droite-contenu>div>h2>span {
+        font-size: 20px;
+    }
+
+    .citation-section-droite-contenu>div>h2 {
+        font-size: 20px;
+    }
+}

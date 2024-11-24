@@ -1,0 +1,38 @@
+
+.zone-droite{
+    width: 300px;
+}
+
+.zone-droite.actif{
+    animation: afficherAideBg 0.3s forwards;
+    display: block;
+}
+.zone-droite > .menu-aide{
+    height: 100vh;
+    max-width: 300px;
+    width: 100%;
+    background-color: #f3e6ff;
+    animation: afficherAide 0.3s ease-out forwards;
+}
+
+.zone-droite > .menu-aide > .tete{
+    width: 100%; 
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.8)), url('/assets/img/aidebg.png') center / cover; 
+    padding: 7px 13px 9px 15px; 
+}
+
+
+@keyframes afficherAide {
+    0%{
+        right: -300px;
+        opacity: 0;
+    }
+    100%{
+        right: 0;
+        opacity: 1;
+    }
+}
+
+.liste-articles > button{
+    margin: 5px 0;
+}

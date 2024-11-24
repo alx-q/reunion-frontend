@@ -1,0 +1,257 @@
+<div class="contenu">
+    <div class="container">
+        <div>
+            <div class="espacement-page-carte"></div>
+            <div class="d-flex align-items-center pb-2 px-1 ">
+                <h5 class="flex-grow-1 m-0">Nouvelle réunion</h5>
+                <app-header-reunion></app-header-reunion>
+            </div>
+            <div class="card carte-interactive container p-0">
+                <div class="d-flex">
+                    <div class="carte-interactive-banniere"
+                        style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/assets/img/pages/reunions.jpg') center/cover;">
+                        <span class="mdi mdi-account-group-outline"></span>
+                    </div>
+
+
+                    <div class="w-100 h-100 carte-interactive-contenu position-relative">
+                        <div class="alerte-centre" *ngIf="estConnecte == false">
+                            <div>
+                                <span class="mdi mdi-shield-key mdi-48px"></span>
+                                <h4>Veuillez vous connecter pour continuer</h4>
+                            </div>
+                        </div>
+                        <div *ngIf="enChargement == true" class="p-3 alerte-centre ecran-chargement">
+                            <div class="spinner-border text-primary" role="status" style="color: black !important;">
+                            </div>
+                        </div>
+                        <div class="p-2" *ngIf="estConnecte == true">
+                            <form [formGroup]="formulaireNouveau">
+                                <div *ngIf="etape == 1">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <a class="btn btn-outline-primary" [routerLink]="['/reunion']">
+                                            <span class="mdi mdi-arrow-left"></span>
+                                        </a>
+                                        <h4 class="m-0 flex-grow-1">Informations sur la réunion</h4>
+                                    </div>
+                                    <div class="px-2 row justify-content-center">
+                                        <div class="col-12 col-md-6">
+                                            <div style="height: 490px;">
+                                                <div class="form-group">
+                                                    <label for="Message-Prenom" i18n>Titre de la réunion</label>
+                                                    <input type="text"
+                                                        class="form-control {{getClasseValidite('titre')}}"
+                                                        id="Message-Prenom" formControlName="titre">
+                                                    <div class="invalid-feedback" i18n *ngIf="valider('titre')">
+                                                        Le titre peut seulement contenir des lettres majuscules et
+                                                        minuscules, tirets, apostrophes et espaces
+                                                    </div>
+                                                </div>
+                                                <small class="text-muted" i18n>Choisissez un titre pertinant</small>
+                                                <br>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="CreerReunion-Lieu" i18n>Lieu</label>
+                                                    <select class="form-select {{getClasseValidite('lieu')}}"
+                                                        id="CreerReunion-Lieu" formControlName="lieu">
+                                                        <option value="virtuel">Virtuel</option>
+                                                        <option value="presentiel">Présentiel</option>
+                                                    </select>
+                                                    <div class="invalid-feedback" i18n *ngIf="valider('lieu')">
+                                                        Le lieu est requis
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="CreerReunion-Description" i18n>Description</label>
+                                                    <textarea class="form-control {{getClasseValidite('description')}}"
+                                                        id="CreerReunion-Description" formControlName="description"
+                                                        rows="5"></textarea>
+                                                    <div class="invalid-feedback" i18n>
+                                                        Le description est obligatoire (Maximum 250 caractères)
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="CreerReunion-Couleur" i18n>Couleur</label>
+                                                    <select class="form-select {{getClasseValidite('couleur')}}"
+                                                        formControlName="couleur" id="CreerReunion-Couleur">
+                                                        <option value="0">🟢 Vert</option>
+                                                        <option value="1">🔵 Bleu</option>
+                                                        <option value="2">⚫ Noir</option>
+                                                        <option value="3">🟣 Mauve</option>
+                                                        <option value="4">🔴 Rouge</option>
+                                                        <option value="5">🟠 Orange</option>
+                                                    </select>
+                                                    <div class="invalid-feedback" i18n *ngIf="valider('couleur')">
+                                                        La couleur est requise
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <button class="btn btn-outline-primary w-100 py-2 m-0"
+                                                [disabled]="this.formulaireNouveau.get('titre')?.invalid || this.formulaireNouveau.get('lieu')?.invalid || this.formulaireNouveau.get('description')?.invalid || this.formulaireNouveau.get('couleur')?.invalid"
+                                                style="border: 1px solid black;" (click)="changerEtape(2)">Configurer
+                                                les dates >></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="etape == 2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-outline-primary" (click)="changerEtape(1)">
+                                            <span class="mdi mdi-arrow-left"></span>
+                                        </button>
+                                        <h4 class="m-0 flex-grow-1">Horaire de la réunion</h4>
+                                    </div>
+                                    <div class="px-2 row justify-content-center">
+                                        <div class="col-12 col-md-6">
+                                            <div class="py-2">
+                                                <div style="overflow-y: auto; height:475px;" class="px-2">
+                                                    <div class="card p-3 my-2"
+                                                        *ngFor="let horaire of horaires; let i = index"
+                                                        style="border-left: 6px solid black;">
+
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <mat-form-field class="flex-grow-1">
+                                                                <mat-label>Date de la réunion</mat-label>
+                                                                <input matInput [matDatepicker]="DateLimite" class="w-100"
+                                                                    id="date{{i}}" [(ngModel)]="horaires[i].date" [ngModelOptions]="{standalone: true}"
+                                                                    (ngModelChange)="changementHoraire(0, $event, i)">
+                                                                <mat-datepicker-toggle matIconSuffix [for]="DateLimite">
+                                                                </mat-datepicker-toggle>
+                                                                <mat-datepicker #DateLimite color="primary">
+                                                                </mat-datepicker>
+                                                            </mat-form-field>
+                                                            <div style="width: 42px;">
+                                                                <button class="btn btn-danger" matTooltip="Supprimer"
+                                                                    matTooltipPosition="left" (click)="supprimerHeure(i)">
+                                                                    <span class="mdi mdi-delete"></span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Temps-Commencement" i18n>Heure de
+                                                                        début</label>
+                                                                    <input [ngxTimepicker]="tempsCom" type="text"
+                                                                        id="heureReunion{{i}}" class="form-control"
+                                                                        readonly [(ngModel)]="horaires[i].heure"
+                                                                        (ngModelChange)="changementHoraire(1, $event, i)" [ngModelOptions]="{standalone: true}"> 
+                                                                    <ngx-material-timepicker #tempsCom
+                                                                        [theme]="darkTheme">
+                                                                    </ngx-material-timepicker>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div class="form-group">
+                                                                    <label for="Temps-Fin" i18n>Durée (heures)</label>
+                                                                    <input type="number" class="form-control"
+                                                                        id="dureeReunion{{i}}"
+                                                                        [(ngModel)]="horaires[i].duree" [ngModelOptions]="{standalone: true}"
+                                                                        (ngModelChange)="changementHoraire(2, $event, i)">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-primary w-100 m-0"
+                                                        (click)="ajouterHoraire()">Ajouter une occurence</button>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-outline-primary w-100 py-2 m-0"
+                                                style="border: 1px solid black;" (click)="changerEtape(3)">Gerer l'accès
+                                                >></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="etape == 3">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button class="btn btn-outline-primary" (click)="changerEtape(2)">
+                                            <span class="mdi mdi-arrow-left"></span>
+                                        </button>
+                                        <h4 class="m-0 flex-grow-1">Accès à la réunion</h4>
+                                    </div>
+                                    <div class="px-2 row justify-content-center">
+                                        <div class="col-12 col-md-6">
+                                            <div class="py-2" style="height: 490px;">
+
+                                                <mat-form-field class="w-100">
+                                                    <mat-label>Date Limite de Réponse</mat-label>
+                                                    <input matInput [matDatepicker]="DateLimite" class="w-100" formControlName="dateLimite">
+                                                    <mat-datepicker-toggle matIconSuffix [for]="DateLimite">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #DateLimite color="primary"></mat-datepicker>
+                                                </mat-form-field>
+                                                <small class="text-muted" i18n>Vos visiteurs devront accepter votre
+                                                    invitation avant cette date</small>
+                                                <br>
+                                                <br>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                        id="Reunion-Publique" value="publique" [(ngModel)]="visibilite" [ngModelOptions]="{standalone: true}">
+                                                    <label class="form-check-label" for="Reunion-Publique">
+                                                        Réunion Publique
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                        id="Reunion-Privee" value="prive" [(ngModel)]="visibilite" [ngModelOptions]="{standalone: true}">
+                                                    <label class="form-check-label" for="Reunion-Privee">
+                                                        Réunion Privée
+                                                    </label>
+                                                </div>
+                                                <div *ngIf="visibilite === 'prive'">
+                                                    <br>
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="Enregistrement-Pass" i18n>Mot de
+                                                                    passe</label>
+                                                                <input type="password"
+                                                                    class="form-control {{getClasseValidite('mdp')}}"
+                                                                    id="Enregistrement-Pass" formControlName="mdp">
+                                                                <div class="invalid-feedback" i18n>
+                                                                    Doit contenir au moins 8 caractères, une majuscule,
+                                                                    un symbole
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6">
+                                                            <div class="form-group">
+                                                                <label for="Enregistrement-PassConf" i18n>Confirmer le
+                                                                    mot de
+                                                                    passe</label>
+                                                                <input type="password"
+                                                                    class="form-control {{getClasseValidite('mdpc')}}"
+                                                                    id="Enregistrement-PassConf" formControlName="mdpc">
+                                                                <div class="invalid-feedback" i18n>
+                                                                    Les mots de passe doivent être identiques
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <small class="text-muted" i18n>Votre réunion sera sécurisée avec un
+                                                        mot de passe</small>
+                                                    <br>
+                                                </div>
+                                                <div class="py-5">
+
+                                                </div>
+
+                                            </div>
+                                            <button class="btn btn-primary w-100 py-2 m-0"
+                                                style="border: 1px solid black;"
+                                                (click)="changerEtape(4)" [disabled]="this.formulaireNouveau!.invalid">Soumettre</button>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

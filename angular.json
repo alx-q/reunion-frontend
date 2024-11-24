@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "alexander": {
+      "i18n": {
+        "sourceLocale":{
+          "code": "fr-CA",
+          "baseHref": "/"
+        }
+      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -25,17 +31,54 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/custom-theme.scss",
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+            ]
           },
           "configurations": {
+            "fr": {
+              "localize": [
+                "fr-CA"
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+            "en": {
+              "localize": [
+                "en-CA"
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
+            "ro": {
+              "localize": [
+                "ro-RO"
+              ],
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            },
             "production": {
               "budgets": [
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -59,6 +102,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "fr": {
+              "browserTarget": "alexander:build:development:fr-CA"
+            },
+            "en": {
+              "browserTarget": "alexander:build:development:en-CA"
+            },
+            "ro": {
+              "browserTarget": "alexander:build:development:ro-RO"
+            },
             "production": {
               "browserTarget": "alexander:build:production"
             },
@@ -71,7 +123,9 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "alexander:build"
+            "browserTarget": "alexander:build",
+            "format": "json",
+            "outputPath": "src/locale"
           }
         },
         "test": {
@@ -90,6 +144,13 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2,
+            "browserTarget": "alexander:build:production"
           }
         }
       }

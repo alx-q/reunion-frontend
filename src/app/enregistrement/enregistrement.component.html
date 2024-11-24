@@ -1,0 +1,221 @@
+<div class="contenu">
+    <div class="container" style="max-width: 1000px;">
+        <div class="animation-carte">
+            <div class="espacement-page-carte"></div>
+            <a [routerLink]="['/']" class="lien-non">
+                <h5 class="pb-2"><span class="mdi mdi-arrow-left"></span> Retour</h5>
+            </a>
+            <div class="card carte-interactive">
+                <div class="row">
+                    <div class="col-12 col-md-6 carte-interactive-image pr-md-0">
+                        <div class="carte-interactive-image-texte"
+                            style="background: linear-gradient(rgba(0,0,0,0.4), rgba(26, 22, 2, 0.8)), url('/assets/img/pages/enregistrement.jpg') center / cover;">
+                            <div class="p-3">
+                                <div class="px-3">
+                                    <h1 class="texte-poppins" i18n>Un moyen facile de s'organiser</h1>
+                                </div>
+                                <span class="mdi mdi-calendar-multiple-check d-md-block d-none mx-2"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 carte-interactive-contenu pl-md-0 position-relative">
+
+                        <div *ngIf="enChargement == true"
+                            class="p-3 alerte-centre ecran-chargement">
+                            <div class="spinner-border text-primary" role="status" style="color: #b37b0d !important;">
+                            </div>
+                        </div>
+                        <div class="p-0" style="background-color: white; color:black">
+                            <div class="jumbotron pt-5 pb-0" style="background-color: rgb(241, 241, 241);">
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <button class="nav-item nav-link text-dark active" id="nav-home-tab"
+                                        data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab"
+                                        style="margin-left: 10px;">Connexion</button>
+                                    <button class="nav-item nav-link text-dark" id="nav-profile-tab"
+                                        data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+                                        role="tab">Inscription</button>
+                                </div>
+                            </div>
+                            <div class="tab-content py-4 px-4" id="nav-tabContent">
+                                <div class="tab-pane fade active show" id="nav-home" role="tabpanel"
+                                    aria-labelledby="nav-home-tab">
+                                    <div style="height: 445px;">
+                                        <form [formGroup]="formulaireConnexion">
+                                            <h3 class="m-0">Connexion</h3>
+                                            <br>
+                                            <div class="alert alert-danger" role="alert" *ngIf="erreur != ''">
+                                                {{erreur}}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="EN_CON_Identifiant">Identifiant</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">👤</span>
+                                                    </div>
+                                                    <input type="text"
+                                                        class="form-control {{getClasseValidite('username', formulaireConnexion)}}"
+                                                        id="Connexion-username" minlength="2"
+                                                        formControlName="username">
+                                                    <div class="invalid-feedback" i18n>
+                                                        Le nom d'utilisateur est requis
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Connexion-mdp">Mot de passe</label>
+                                                <input type="password"
+                                                    class="form-control {{getClasseValidite('mdp', formulaireConnexion)}}"
+                                                    id="Connexion-mdp" formControlName="mdp">
+                                                <div class="invalid-feedback" i18n>
+                                                    Le mot de passe est requis
+                                                </div>
+                                            </div>
+                                            <div class="toast align-items-center show w-100 shadow-none my-3"
+                                                *ngIf="idInvitation != ''">
+                                                <div class="d-flex">
+                                                    <div class="toast-body text-muted">
+                                                        <span class="mdi mdi-account-multiple"></span>
+                                                        Vous allez accepter l'invitation après la connexion
+                                                    </div>
+                                                    <button type="button" class="btn-close me-2 m-auto"
+                                                        matTooltip="Annuler l'invitation" matTooltipPosition="left"
+                                                        (click)="annulerInvitation()"></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <button type="button" class="btn btn-primary text-right m-0 w-100" (click)="connecter()"
+                                        [disabled]="!this.formulaireConnexion.valid">
+                                        Se Connecter
+                                    </button>
+                                </div>
+                                <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+                                    aria-labelledby="nav-profile-tab">
+                                    <div style="height: 500px; overflow-y:auto; overflow-x: hidden;">
+                                        <form [formGroup]="formulaireInscription">
+                                            <h3 class="m-0">Inscription</h3>
+                                            <br>
+                                            <div class="alert alert-danger" role="alert" *ngIf="erreurIsc != ''">
+                                                {{erreurIsc}}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="EN_Identifiant">Identifiant</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">👤</span>
+                                                    </div>
+                                                    <input type="text"
+                                                        class="form-control {{getClasseValidite('username', formulaireInscription)}}"
+                                                        id="inscription-Identifiant" minlength="2" maxlength="16"
+                                                        formControlName="username">
+                                                    <div class="invalid-feedback" i18n>
+                                                        Le nom d'utilisateur doit être composé de lettres minuscules et
+                                                        chiffres
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inscription-Nom">Nom Complet</label>
+                                                <input type="text"
+                                                    class="form-control {{getClasseValidite('nom', formulaireInscription)}}"
+                                                    id="inscription-Nom" formControlName="nom">
+                                                <div class="invalid-feedback" i18n>
+                                                    Veuillez entrer votre nom complet (Nom et Prénom)
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="form-group">
+                                                <label for="inscription-Courriel">Courriel</label>
+                                                <input type="email"
+                                                    class="form-control {{getClasseValidite('email', formulaireInscription)}}"
+                                                    id="inscription-Courriel" formControlName="email">
+                                                <div class="invalid-feedback" i18n>
+                                                    Le courriel doit etre valide
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="inscription-Mdp" i18n>Mot de
+                                                            passe</label>
+                                                        <input type="password"
+                                                            class="form-control {{getClasseValidite('mdp', formulaireInscription)}}"
+                                                            id="inscription-Mdp" formControlName="mdp">
+                                                        <div class="invalid-feedback" i18n>
+                                                            Doit contenir au moins 8 caractères
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="inscription-Mdpc" i18n>Confirmer le
+                                                            mot de
+                                                            passe</label>
+                                                        <input type="password"
+                                                            class="form-control {{getClasseValidite('mdpc', formulaireInscription)}}"
+                                                            id="inscription-Mdpc" formControlName="mdpc">
+                                                        <div class="invalid-feedback" i18n>
+                                                            Les mots de passe doivent être identiques
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="toast align-items-center show w-100 shadow-none my-3"
+                                                *ngIf="idInvitation != ''">
+                                                <div class="d-flex">
+                                                    <div class="toast-body text-muted">
+                                                        <span class="mdi mdi-account-multiple"></span>
+                                                        Vous allez accepter l'invitation après votre inscription
+                                                    </div>
+                                                    <button type="button" class="btn-close me-2 m-auto"
+                                                        matTooltip="Annuler l'invitation" matTooltipPosition="left"
+                                                        (click)="annulerInvitation()"></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <button type="button" class="btn btn-primary text-right m-0 w-100"
+                                        [disabled]="!this.formulaireInscription.valid" (click)="inscrire()">
+                                        S'inscrire
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--h4 i18n>Choisissez une option</h4>
+                            <br>
+                            <br>
+                            <div style="max-width: 450px; margin:auto" class="py-5">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn bouton-creer" [routerLink]="['/enregistrement/creer']">
+                                            <span class="mdi mdi-calendar-plus"></span>
+                                            <br>
+                                            <span i18n>Créer un nouvel évenement</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button class="btn bouton-joindre" [routerLink]="['/enregistrement/voir']">
+                                            <span class="mdi mdi-calendar-arrow-right"></span>
+                                            <br>
+                                            <span i18n>Atteindre un évenement</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                            <p class="text-muted m-0">
+                                <span class="mdi mdi-help-circle-outline"></span>
+                                <span i18n>Voulez-vous créer un nouvel évènement ou en atteindre un existant?</span>
+                            </p-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>

@@ -1,0 +1,57 @@
+<div class="container-fluid">
+    <div class="row section-404">
+        <div class="col-4 d-flex align-items-center justify-content-center">
+            <div class="px-5">
+                <h1 class="fw-bold" style="font-size: 60px;">404</h1>
+                <h4 i18n>Page introuvable!</h4>
+                <br>
+                <p i18n>Désolé, mais la page que vous recherchez est introuvable. Il est possible que le lien suivi soit obsolète, que la page ait été supprimée ou renommée, ou que vous ayez mal tapé l'URL.</p>
+                <button class="btn btn-primary mt-2" routerLink="">Retour à l'accueil</button>
+            </div>
+        </div>
+        <div class="col-8 d-flex align-items-center justify-content-center" style="background: linear-gradient(to right, white, transparent), url('/assets/img/404/404-flappy.jpg') center/cover">
+            <div>
+                <div class="jeu {{ estCommence()? '': 'cacher'}}" style="position: relative;">
+                    <div class="jeu-jeu">
+                        <div class="jeu-header jeu-header-gauche">
+                            Score: {{score}}
+                        </div>
+                        <div class="jeu-header jeu-header-droite" (click)="pause()">
+                            <span class="mdi mdi-pause"></span>
+                        </div>
+                        <canvas #canvasJeu width="288" height="512"></canvas>
+                    </div>
+                    <div *ngIf="estPause()" class="jeu-pause">
+                        <div class="bg-warning p-3 d-flex align-items-center justify-content-between text-dark">
+             
+                            <img src="/assets/img/flappy/logo-txt.png" alt="" style="height: 40px;">
+                            <span class="mdi mdi-refresh mdi-36px" (click)="commencer()"></span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center" style="height: calc(100% - 90px);" *ngIf="estPause() && !estPerdu()">
+                            <div class="text-center">
+                                <h1 class="text-center texte-jeu" i18n>Pause</h1>
+                                <br>
+                                <button class="btn btn-warning px-3" (click)="partir()"><span class="mdi mdi-play mdi-36px"></span></button>
+                                <br>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-center" style="height: calc(100% - 90px);" *ngIf="estPerdu()">
+                            <div class="text-center">
+                                <h1 class="text-center texte-jeu">Game Over!</h1>
+                                <h5 class="text-center texte-jeu">Score: {{ score }}</h5>
+                                <br>
+                                <button class="btn btn-warning px-3" (click)="commencer()"><span class="mdi mdi-refresh mdi-36px"></span></button>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" *ngIf="!estCommence()">
+                    <img src="/assets/img/flappy/logo-txt.png" alt="" style="height: 130px;">
+                    <br>
+                    <button i18n class="btn btn-warning mt-5 bouton-jouer" (click)="commencer()" i18n>Jouer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

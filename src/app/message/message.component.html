@@ -1,0 +1,90 @@
+<div class="contenu">
+    <div class="container">
+        <div class="animation-carte">
+            <div class="espacement-page-carte"></div>
+            <a [routerLink]="['/']" class="lien-non">
+                <h5 class="pb-2"><span class="mdi mdi-arrow-left"></span> <span i18n> Retour</span></h5>
+            </a>
+            <div class="card carte-interactive">
+                <div class="row">
+                    <div class="col-12 col-md-6 carte-interactive-image">
+                        <div class="carte-interactive-image-texte"
+                            style="background: linear-gradient(rgba(0,0,0,0.4), rgba(2, 26, 13, 0.8)), url('/assets/img/pages/message2.png') center / cover;">
+                            <div class="p-3">
+                                <div class="px-3">
+                                    <h1 class="texte-poppins" i18n>Un Souci?</h1>
+                                    <h1 class="texte-poppins" i18n>Envoyez-nous un message!</h1>
+                                </div>
+                                <span class="mdi mdi-forum d-md-block d-none"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 carte-interactive-contenu h-100">
+                        <div *ngIf="messageEnvoye == false">
+                            <h4 i18n>Nous allons vous répondre le plus rapidement que possible</h4>
+                            <p class="text-muted" i18n>Entrez les informations requises, ainsi que votre message.</p>
+                            <br>
+                            <form [formGroup]="formulaireMessage">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="Message-Nom" i18n>Nom</label>
+                                            <input type="text" class="form-control {{getClasseValidite('nom')}}" id="Message-Nom" formControlName="nom">
+                                            <div class="invalid-feedback" *ngIf="valider('nom')" i18n>
+                                                Le nom peut seulement contenir des lettres majuscules et minuscules,
+                                                tirets, apostrophes et espaces
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="Message-Prenom" i18n>Prénom</label>
+                                            <input type="text" class="form-control {{getClasseValidite('prenom')}}" id="Message-Prenom" formControlName="prenom">
+                                            <div class="invalid-feedback" *ngIf="valider('prenom')" i18n>
+                                                Le prénom peut seulement contenir des lettres majuscules et
+                                                minuscules, tirets, apostrophes et espaces
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <small class="text-muted" i18n>Entrez votre nom complet tel qu'il apparait sur votre
+                                    passport</small>
+                                <br>
+                                <br>
+                                <div class="form-group">
+                                    <label for="Message-Courriel" i18n>Courriel</label>
+                                    <input type="email" id="Message-Courriel" class="form-control {{getClasseValidite('courriel')}}" formControlName="courriel">
+                                    <div class="invalid-feedback" *ngIf="valider('courriel')" i18n>
+                                        Le courriel doit etre valide.
+                                    </div>
+                                </div>
+                                <small class="text-muted" i18n>Une vérification de votre courriel sera effectué</small>
+                                <br>
+                                <br>
+                                <div class="form-group">
+                                    <label for="Message-Message" i18n>Message</label>
+                                    <textarea class="form-control {{getClasseValidite('message')}}" id="Message-Message" rows="5" formControlName="message"></textarea>
+                                    <div class="invalid-feedback" *ngIf="valider('description')" i18n>
+                                        Le message est obligatoire (Maximum 250 caractères)
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end pt-4">
+                                    <button class="btn btn-primary" [disabled]="!this.formulaireMessage.valid" (click)="envoyerMessage()" i18n>Envoyer</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="messageEnvoye == true">
+                            <div class="d-flex justify-content-center align-items-center" style="height: 500px;">
+                                <div class="text-center">
+                                    <span class="mdi mdi-check-circle-outline text-success" style="font-size: 60px;"></span>
+                                    <h5 i18n>Merci!</h5>
+                                    <p i18n>Votre message a été envoyé</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

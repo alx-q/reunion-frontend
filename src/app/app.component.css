@@ -1,0 +1,24 @@
+.contenu {
+    background-color: #e3f2fd;
+}
+
+.aide-main {
+    height: calc(100vh - 160px);
+    overflow: auto;
+}
+
+/* Section */
+
+.zone-principale {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.zone-aide {
+    display: inline-block;
+    position: sticky;
+    top: 0;
+    right: 0;
+    vertical-align: top;
+}

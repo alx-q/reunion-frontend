@@ -1,0 +1,50 @@
+<div class="modal fade" id="modal-login" tabindex="-1" aria-hidden="true" *ngIf="estConnecte == false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="position: relative;">
+            
+            <div *ngIf="enChargement == true" class="p-3 alerte-centre ecran-chargement">
+                <div class="spinner-border text-primary" role="status" style="color: #168288 !important;"></div>
+            </div>
+
+
+            <div class="justify-content-between text-white modal-header-login">
+                <div class="d-flex justify-content-end">
+                    <div data-bs-dismiss="modal" aria-label="Close" title="Fermer"><span
+                            class="mdi mdi-close mdi-24px"></span></div>
+                </div>
+                <div class="pt-5">
+                    <h3>Se Connecter</h3>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" *ngIf="erreur != ''">
+                    {{erreur}}
+                </div>
+                <form [formGroup]="formulaireConnexion">
+                    <div class="form-group">
+                        <label for="modal-login-utili" class="mb-2" i18n>Nom d'utilisateur</label>
+                        <input type="text" class="form-control {{getClasseValidite('utilisateur')}}"
+                            id="modal-login-utili" placeholder="Nom d'utilisateur" formControlName="utilisateur">
+                        <div class="invalid-feedback" *ngIf="valider('utilisateur')" i18n>
+                            Le nom d'utilisateur doit seuelment être composé de lettres et chiffres
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label for="modal-login-passe" class="mb-2" i18n>Mot de passe</label>
+                        <input type="password" class="form-control {{getClasseValidite('mdp')}}" id="modal-login-passe"
+                            placeholder="Mot de passe" formControlName="mdp">
+                        <div class="invalid-feedback" *ngIf="valider('mdp')" i18n>
+                            Le mot de passe doit contenir au moins 8 caractères
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="container-bouton-login">
+                <button type="button" class="btn btn-primary btn-info btn-block" (click)="envoyerConnexion()" [disabled]="!this.formulaireConnexion.valid" i18n>Se
+                    Connecter</button>
+            </div>
+        </div>
+    </div>
+</div>

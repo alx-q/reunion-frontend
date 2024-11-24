@@ -1,0 +1,7 @@
+.contenu{
+    background-color:  #ffecec;
+}
+
+#articles > div > img{
+    margin: 10px 0;
+}

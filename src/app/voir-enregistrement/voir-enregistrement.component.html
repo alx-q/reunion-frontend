@@ -1,0 +1,70 @@
+<div style="background-color: black;">
+    <div class="contenu animation-apparition">
+        <div style="backdrop-filter: blur(10px); min-height: 100vh;">
+            <div class="container">
+                <div class="animation-carte">
+                    <br>
+                    <div class="espacement-page-carte"></div>
+                    <a [routerLink]="['/enregistrement']" class="lien-non">
+                        <h5 class="pb-2 text-white"><span class="mdi mdi-arrow-left"></span> <span i18n> Retour</span>
+                        </h5>
+                    </a>
+                    <div class="card carte-interactive" style="background-color: rgb(29, 29, 29); color:white">
+                        <div class="row">
+                            <div class="col-12 col-md-6 carte-interactive-image">
+                                <div class="carte-interactive-image-texte"
+                                    style="background: linear-gradient(rgba(0,0,0,0.2), rgba(26, 22, 2, 0.8)), url('/assets/img/pages/invite3.jpg') center / cover;">
+                                    <div class="p-3" *ngIf="lesInfos != null">
+                                        <div class="px-3">
+                                            <h1 class="texte-poppins" i18n>Vous êtes invités à une réunion!</h1>
+                                        </div>
+                                        <span class="mdi mdi-gift-open-outline d-md-block d-none mx-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 carte-interactive-contenu">
+                                <div *ngIf="enChargement == true" class="p-3 alerte-centre ecran-chargement ecran-chargement-noir">
+                                    <div class="spinner-border text-primary" role="status"
+                                        style="color: #009688 !important;">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div *ngIf="lesInfos != null">
+                                        <div style="height: 470px;">
+                                            <h3 class="m-0" i18n>{{ lesInfos.titre }}</h3>
+                                            <br>
+                                            <div class="d-flex">
+                                                <img src="/assets/img/profiles/{{ lesInfos.nom.toLowerCase().charAt(0) }}.png" alt="" class="image-profil-mini">
+                                                <h6>{{ lesInfos.nom }}</h6>
+                                            </div>
+                                            <br>
+                                            <h5>Description de la réunion</h5>
+                                            <p><small>{{ lesInfos.description }}</small></p>
+                                            <br>
+                                            <h5>Date limite pour joindre</h5>
+                                            <p><small>Le {{ lesInfos.date_limite }}</small></p>
+                                            <br>
+                                        </div>
+                                        <button *ngIf="lesInfos.valide" class="btn btn-primary w-100 m-0 my-2" (click)="accepterInvitation()">Accepter l'invitation</button>
+                                        <button *ngIf="!lesInfos.valide" class="btn btn-primary w-100 m-0 my-2" disabled>Date Limite Franchie</button>
+                                        <button class="btn btn-outline-primary w-100"
+                                            [routerLink]="['/']">Refuser</button>
+                                    </div>
+                                    <div *ngIf="lesInfos == null">
+                                        <div class="alerte-centre">
+                                            <div>
+                                                <span class="mdi mdi-account-multiple-remove mdi-48px"></span>
+                                                <h4>Invitation Introuvable</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

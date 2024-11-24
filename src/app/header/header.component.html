@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="./index.html">
+            <img src="/assets/img/logo/logo.png" width="33" height="33" class="d-inline-block align-top" alt="">
+            {{ title }}
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="accueil" routerLinkActive="active" i18n>Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="message" routerLinkActive="active" i18n>
+                        Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="documentation" routerLinkActive="active" i18n>Documentation</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                        i18n>
+                        Réunions
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" [routerLink]="['/enregistrement']"><span
+                                    class="mdi mdi-account-plus" routerLinkActive="active"></span>
+                                <span i18n> Enregistrement</span></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" [routerLink]="['/reunion']"><span
+                                    class="mdi mdi-account-group"></span>
+                                <span i18n> Mes réunions</span></a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" [routerLink]="['/reunion/creer']"><span
+                                    class="mdi mdi-plus-box-outline"></span>
+                                <span i18n> Créer une réunion</span></a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            <div class="d-flex align-items-center">
+
+                <div class="dropdown menu-notifications" *ngIf="serviceConnexion.estConnecte">
+                    <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown"
+                        matTooltip="Messages" matTooltipPosition="below"
+                        [ngStyle]="{borderColor:couleur, color:couleur}"><span class="mdi mdi-message"
+                            style="font-size: 20px; line-height: 26px"></span></button>
+                    <div class="dropdown-menu dropdown-menu-end p-0" style="width: 320px;">
+                        <div class="tete"
+                            style="width: 100%; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('/assets/img/pages/lecture-msg.jpg') center / cover; padding: 15px; border-radius: 5px 5px 0 0;">
+                            <br>
+                            <br>
+                            <div class="d-flex text-white align-items-center">
+                                <h6 class="m-0"><span class="mdi mdi-message mdi-16px"></span>&nbsp;Messages</h6>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <a class="dropdown-item" [routerLink]="['mes-messages']"><span
+                                    class="mdi mdi-inbox"></span><span> Boîte de Réception</span></a>
+                            <a class="dropdown-item" [routerLink]="['message']"><span
+                                    class="mdi mdi-message-draw"></span><span> Rédiger un message</span></a>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-primary" matTooltip="Aide" matTooltipPosition="below"
+                    (click)="changerEtatAide()" [ngStyle]="{borderColor:couleur, color:couleur}"><span
+                        class="mdi mdi-help-circle" style="font-size: 22px; line-height: 26px"></span></button>
+                <button *ngIf="!serviceConnexion.estConnecte" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#modal-login"
+                    [ngStyle]="{borderColor:couleur, background:couleur}">Connexion</button>
+
+                <div class="dropdown" *ngIf="serviceConnexion.estConnecte">
+                    <button class="btn btn-outline-primary bouton-profil dropdown-toggle" data-bs-toggle="dropdown"
+                        [matTooltip]="nomUtilisateur" matTooltipPosition="below"
+                        [ngStyle]="{borderColor:couleur, color:couleur}"></button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" (click)="deconnecter()"><span class="mdi mdi-arrow-right"></span>
+                                Se déconnecter</a>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div>
+            <button class="btn btn-primary d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                aria-label="Toggle navigation" [ngStyle]="{borderColor:couleur, background:couleur}">
+                <span class="mdi mdi-menu mdi-16px"></span>
+            </button>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,26 @@
+.contenu{
+    /*background-color: #dcffef;
+    */background-color: #ecefff;
+}
+
+button.btn.btn-primary{
+    /*background-color: #00af60; 
+    border-color:#00af60; 
+*/
+background-color: #0d51a5; 
+    border-color:#0d51a5; 
+}
+
+.text-primary{
+    color: #0d51a5 !important;
+}
+
+.list-group-item {
+    user-select: none;
+}
+
+.list-group-item.active {
+    color: rgb(36, 36, 36);
+    background-color: #ecefff;
+    border-color: #0d51a5;
+}

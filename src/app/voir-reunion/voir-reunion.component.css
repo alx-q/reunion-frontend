@@ -1,0 +1,46 @@
+.contenu{
+    background-color: #e7e7e7;
+}
+
+.btn.btn-primary{
+    background-color: #30383f !important;
+    border-color: #30383f !important;
+}
+
+
+.btn.btn-outline-primary{
+    color: #30383f;
+}
+
+.bouton-ajout-reunion{
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    padding: 6px 12px;
+    border-radius: 50%;
+    z-index: 20;
+}
+
+.bouton-rejoindre-reunion{
+    position: absolute;
+    bottom: 76px;
+    right: 22px;
+    padding: 0px 6px;
+    border-radius: 50%;
+    z-index: 20;
+}
+
+.list-group-item {
+    user-select: none;
+}
+
+.list-group-item.active {
+    color: rgb(36, 36, 36);
+    background-color: #e7e7e7;
+    border-color: #30383f;
+}
+
+.image-profil > .mdi::before {
+    line-height: 36px;
+    font-size: 30px;
+}

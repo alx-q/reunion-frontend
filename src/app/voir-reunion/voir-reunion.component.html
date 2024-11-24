@@ -1,0 +1,583 @@
+<div class="contenu">
+    <div class="container">
+        <div>
+            <div class="espacement-page-carte"></div>
+            <div class="d-flex align-items-center pb-2 px-1 ">
+                <h5 class="flex-grow-1 m-0">Mes Réunions</h5>
+                <app-header-reunion></app-header-reunion>
+            </div>
+            <div class="card carte-interactive container p-0">
+                <div class="d-flex">
+                    <div class="carte-interactive-banniere"
+                        style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('/assets/img/pages/reunions.jpg') center/cover;">
+                        <span class="mdi mdi-account-group-outline"></span>
+                    </div>
+                    <div class="w-100 h-100 carte-interactive-contenu position-relative">
+                        <div *ngIf="enChargement == true || enChargementOverlay == true"
+                            class="p-3 alerte-centre ecran-chargement">
+                            <div class="spinner-border text-primary" role="status" style="color: black !important;">
+                            </div>
+                        </div>
+
+                        <div *ngIf="activiteCourante == 'voir' && enChargement == false && laReunion != null"
+                            class="p-0">
+                            <div *ngIf="laReunion.infos[0] != null">
+                                <div [ngStyle]="{'background-color': couleursRencontres[laReunion.infos[0].couleur].couleur}"
+                                    style="width: 100%; background-image: url('/assets/img/background-transparent.svg');"
+                                    class="p-2 text-white">
+                                    <div class="d-flex align-items-center gap-2 text-white">
+                                        <a class="btn btn-outline-primary text-white" [routerLink]="['/reunion']">
+                                            <span class="mdi mdi-arrow-left"></span>
+                                        </a>
+                                        <h4 class="m-0 flex-grow-1">{{ laReunion.infos[0].titre }}</h4>
+                                    </div>
+                                    <div class="px-5 py-1">
+                                        <p class="mb-2">
+                                            <small>
+                                                <span class="mdi mdi-account"></span>
+                                                {{ laReunion.infos[0].nom }}
+                                            </small>
+                                        </p>
+                                        <p class="m-0">
+                                            <small>{{ laReunion.infos[0].description }}</small>
+                                        </p>
+                                        <br>
+                                    </div>
+
+                                </div>
+                                <div class="px-4 py-3">
+                                    <h5>Horaires et confirmations</h5>
+                                    <div class="row px-2">
+                                        <div class="col-12 col-md-6 col-lg-3 p-1"
+                                            *ngFor="let heures of laReunion.heures">
+                                            <div class="card">
+                                                <div [ngStyle]="{'background-color': couleursRencontres[laReunion.infos[0].couleur].couleur}"
+                                                    style="color: white; height: 140px; position: relative;"
+                                                    class="card-img-top">
+                                                    <div
+                                                        style="padding: 20px 16px 6px 16px; position: absolute; bottom: 0;">
+                                                        <h5>
+                                                            <span class="mdi mdi-calendar mdi-24px"></span> {{
+                                                            formatterDate(heures.date) }}
+                                                        </h5>
+                                                        <h5>
+                                                            <span class="mdi mdi-clock mdi-24px"></span> {{
+                                                            enleverSecondes(heures.heure) }}
+                                                        </h5>
+
+                                                    </div>
+                                                </div>
+                                                <div class="card-body px-3 py-2">
+                                                    <div class="d-flex align-items-center gap-3"
+                                                        *ngIf="verifierDisponibilite(heures.id) != null && verifierDisponibilite(heures.id)!.accepte">
+                                                        <small class="m-0 text-muted flex-grow-1"><span
+                                                                class="mdi mdi-checkbox-marked"></span>
+                                                            Confirmé</small>
+                                                        <small (click)="confirmerHeure(heures.id)"
+                                                            class="user-select-none">Annuler</small>
+                                                    </div>
+                                                    <div class="d-flex align-items-center gap-3"
+                                                        *ngIf="verifierDisponibilite(heures.id) == null || !verifierDisponibilite(heures.id)!.accepte">
+                                                        <small class="m-0 text-muted flex-grow-1"><span
+                                                                class="mdi mdi-checkbox-blank-outline"></span>
+                                                            Non Confirmé</small>
+                                                        <small (click)="confirmerHeure(heures.id)"
+                                                            class="user-select-none">Confirmer</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <br>
+                                    <h5>Actions Rapides</h5>
+                                    <button class="btn btn-outline-primary px-3 py-2 mx-0 my-1"
+                                        (click)="changerActivite('voirParticipants')"
+                                        style="border: 1px solid black;"><span
+                                            class="mdi mdi-account-multiple-outline"></span> Voir les
+                                        participants</button>
+                                    <button class="btn btn-outline-primary px-3 py-2 mx-2 my-1"
+                                        *ngIf="laReunion.est_admin" (click)="changerActivite('invitations')"
+                                        style="border: 1px solid black;"><span
+                                            class="mdi mdi-account-multiple-plus"></span> Invitations</button>
+                                    <button class="btn btn-outline-primary px-3 py-2 mx-0 my-1"
+                                        *ngIf="laReunion.est_admin" style="border: 1px solid black;"
+                                        (click)="changerActivite('parametres')"><span class="mdi mdi-cog"></span>
+                                        Parametres de
+                                        la reunion</button>
+                                    <button class="btn btn-outline-primary px-3 py-2 mx-2 my-1"
+                                        *ngIf="!laReunion.est_admin" style="border: 1px solid black;"
+                                        (click)="supprimerUtilisateur(this.serviceReunion.nomUtilisateur)"><span
+                                            class="mdi mdi-exit-run"></span>
+                                        Sortir de la réunion</button>
+
+                                </div>
+                            </div>
+                            <div *ngIf="laReunion.infos[0] == null">
+                                <a class="btn btn-outline-primary" [routerLink]="['/reunion']"
+                                    style="position: absolute; left: 8px; top: 8px">
+                                    <span class="mdi mdi-arrow-left"></span>
+                                </a>
+                                <div class="alerte-centre">
+                                    <div>
+                                        <span class="mdi mdi-account-multiple-remove mdi-48px"></span>
+                                        <h4>Réunion Introuvable</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activiteCourante == 'voirParticipants' && enChargement == false" class="p-0">
+                            <div class="p-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <button class="btn btn-outline-primary" (click)="changerActivite('voir')">
+                                        <span class="mdi mdi-arrow-left"></span>
+                                    </button>
+                                    <h4 class="m-0 flex-grow-1">Participants</h4>
+                                </div>
+                            </div>
+                            <div style="max-height: 540px; overflow-y:auto; box-sizing: border-box;">
+                                <div class="p-3">
+                                    <style>
+                                        td {
+                                            padding: 8px 10px;
+                                        }
+                                    </style>
+                                    <h5>Participants ({{ participations.participants.length }})</h5>
+                                    <div>
+                                        <span *ngFor="let participant of participations.participants"
+                                            class="badge rounded-pill text-bg-secondary p-0 mx-1"
+                                            style="padding-right: 8px !important;"><img
+                                                [src]="'/assets/img/profiles/' + participant.nom.charAt(0).toLowerCase() + '.png'"
+                                                class="image-profil-medium" alt="Image Profil"><span
+                                                class="vertical-align-bottom">{{ participant.nom }} </span>
+                                            <span *ngIf="participant.est_admin"
+                                                class="badge text-bg-light">Admin</span></span>
+                                    </div>
+                                    <br>
+                                    <h5>Heures et Confirmations</h5>
+                                </div>
+                                <div style="overflow-x:auto; box-sizing: border-box;" class="w-100 p-3">
+                                    <table class="table table-sm m-0 table-bordered table-fixed rounded w-100">
+                                        <thead>
+                                            <tr>
+                                                <td scope="col" style="width: 150px;"><small>Participant</small></td>
+                                                <td scope="col" class="text-center" style="width: 140px;"
+                                                    *ngFor="let heure of laReunion.heures">
+                                                    <p class="m-0" style="font-size: 12px;"><span
+                                                            class="mdi mdi-calendar mdi-16px"></span> {{
+                                                        formatterDate(heure.date) }}
+                                                    </p>
+                                                    <p class="m-0" style="font-size: 12px;"><span
+                                                            class="mdi mdi-clock-outline mdi-16px"></span> {{
+                                                        enleverSecondes(heure.heure) }}</p>
+                                                </td>
+                                                <td scope="col" class="text-center"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let participant of participations.participants">
+                                                <td><img [src]="'/assets/img/profiles/' + participant.nom.charAt(0).toLowerCase() + '.png'"
+                                                        class="image-profil-mini" alt="Image Profil">
+                                                    <small>{{participant.nom}} <span *ngIf="participant.est_admin"
+                                                            class="badge text-bg-secondary p-1"
+                                                            style="font-size: 10px;">Admin</span></small>
+                                                </td>
+                                                <td *ngFor="let heure of laReunion.heures"
+                                                    class="text-muted text-center">
+                                                    <span
+                                                        *ngIf="verifierDisponibiliteEtranger(participant.username, heure.id)"
+                                                        class="mdi mdi-checkbox-marked"></span>
+                                                    <span
+                                                        *ngIf="!verifierDisponibiliteEtranger(participant.username, heure.id)"
+                                                        class="mdi mdi-checkbox-blank-outline"></span>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activiteCourante == 'parametres' && enChargement == false" class="p-0">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-12" style="background: rgb(245, 245, 245); height: 600px;">
+                                        <div class="py-2">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <button class="btn btn-outline-primary"
+                                                    (click)="changerActivite('voir')">
+                                                    <span class="mdi mdi-arrow-left"></span>
+                                                </button>
+                                                <h4 class="m-0 flex-grow-1">Paramètres de la réunion</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="list-group">
+                                                <div class="list-group-item list-group-item-action "
+                                                    [class.active]="parametreCourant == 'details'" aria-current="true"
+                                                    (click)="changerOngletParametres('details')">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="image-profil">
+                                                            <span class="mdi mdi-image-text"></span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="m-0">Détails sur la réunion</h5>
+                                                            </div>
+
+                                                            <small class="text-muted">Voir et gérer les
+                                                                participants</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item list-group-item-action "
+                                                    [class.active]="parametreCourant == 'participants'"
+                                                    aria-current="true"
+                                                    (click)="changerOngletParametres('participants')">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="image-profil">
+                                                            <span class="mdi mdi-account"></span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="m-0">Participants</h5>
+                                                            </div>
+
+                                                            <small class="text-muted">Voir et gérer les
+                                                                participants</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item list-group-item-action "
+                                                    [class.active]="parametreCourant == 'heures'"
+                                                    (click)="changerOngletParametres('heures')" aria-current="true">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="image-profil">
+                                                            <span class="mdi mdi-calendar"></span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="m-0">Heures</h5>
+                                                            </div>
+
+                                                            <small class="text-muted">Voir et gérer les heures</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-group-item list-group-item-action "
+                                                    [class.active]="parametreCourant == 'supprimer'"
+                                                    (click)="changerOngletParametres('supprimer')" aria-current="true">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="image-profil">
+                                                            <span class="mdi mdi-delete"></span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="m-0">Supression</h5>
+                                                            </div>
+
+                                                            <small class="text-muted">Supprimer la réunion</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 p-3" style="max-height: 600px; overflow-y:auto;">
+                                        <div *ngIf="parametreCourant == 'details'">
+                                            <h4>Détails de la réunion</h4>
+                                            <br>
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="Message-Prenom" i18n>Titre de la réunion</label>
+                                                    <input type="text" class="form-control" id="Message-Prenom"
+                                                        [(ngModel)]="laReunion.infos[0].titre"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="CreerReunion-Lieu" i18n>Lieu</label>
+                                                    <select class="form-select" id="CreerReunion-Lieu"
+                                                        [(ngModel)]="laReunion.infos[0].lieu"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="virtuel">Virtuel</option>
+                                                        <option value="presentiel">Présentiel</option>
+                                                    </select>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="CreerReunion-Description" i18n>Description</label>
+                                                    <textarea class="form-control" id="CreerReunion-Description"
+                                                        rows="5" [(ngModel)]="laReunion.infos[0].description"
+                                                        [ngModelOptions]="{standalone: true}"></textarea>
+                                                </div>
+                                                <br>
+                                                <div class="form-group">
+                                                    <label for="CreerReunion-Couleur" i18n>Couleur</label>
+                                                    <select class="form-select" id="CreerReunion-Couleur"
+                                                        [(ngModel)]="laReunion.infos[0].couleur"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <option value="0">🟢 Vert</option>
+                                                        <option value="1">🔵 Bleu</option>
+                                                        <option value="2">⚫ Noir</option>
+                                                        <option value="3">🟣 Mauve</option>
+                                                        <option value="4">🔴 Rouge</option>
+                                                        <option value="5">🟠 Orange</option>
+                                                    </select>
+                                                </div>
+                                                <br>
+                                                <mat-form-field class="w-100">
+                                                    <mat-label>Date Limite de Réponse</mat-label>
+                                                    <input matInput [matDatepicker]="DateLimite" class="w-100"
+                                                        [(ngModel)]="laReunion.infos[0].date_limite"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                    <mat-datepicker-toggle matIconSuffix [for]="DateLimite">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #DateLimite color="primary"></mat-datepicker>
+                                                </mat-form-field>
+                                                <br>
+                                                <br>
+                                                <button class="btn btn-primary w-100 m-0"
+                                                    (click)="changementDetails()">Sauvegarder les
+                                                    changements</button>
+                                            </form>
+
+                                        </div>
+                                        <div *ngIf="parametreCourant == 'participants'">
+                                            <h4>Participants</h4>
+                                            <br>
+                                            <div class="list-group">
+                                                <div class="list-group-item"
+                                                    *ngFor="let participant of participations.participants">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <img [src]="'/assets/img/profiles/' + participant.nom.charAt(0).toLowerCase() + '.png'"
+                                                            class="image-profil-medium" alt="Image Profil">
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="m-0">{{ participant.nom }} ({{
+                                                                participant.username }})</h6>
+                                                        </div>
+                                                        <button class="btn btn-outline-primary"
+                                                            *ngIf="participant.est_admin"
+                                                            matTooltip="Enlever Administrateur"
+                                                            (click)="enleverOuAjouterAdmin(participant.username, false)">
+                                                            <span class="mdi mdi-shield-crown"></span>
+                                                        </button>
+                                                        <button class="btn btn-outline-primary"
+                                                            *ngIf="!participant.est_admin"
+                                                            matTooltip="Ajouter Administrateur"
+                                                            (click)="enleverOuAjouterAdmin(participant.username, true)">
+                                                            <span class="mdi mdi-shield-crown-outline"></span>
+                                                        </button>
+                                                        <button class="btn btn-outline-primary" matTooltip="Expulser"
+                                                            *ngIf="participant.username != serviceReunion.nomUtilisateur"
+                                                            (click)="supprimerUtilisateur(participant.username)">
+                                                            <span class="mdi mdi-account-remove"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="parametreCourant == 'heures'">
+                                            <div class="d-flex align-items-center">
+                                                <h4 class="flex-grow-1">Heures</h4>
+                                                <button class="btn btn-primary px-2 py-1" matTooltip="Revenir au début"
+                                                    matTooltipPosition="left" (click)="initialiserHeures()">
+                                                    <span class="mdi mdi-undo"></span>
+                                                </button>
+                                            </div>
+                                            <br>
+                                            <div class="card p-3 my-2"
+                                                *ngFor="let horaires of heuresParametres; let i = index"
+                                                style="border-left: 6px solid black;">
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <mat-form-field class="flex-grow-1">
+                                                        <mat-label>Date de la réunion</mat-label>
+                                                        <input matInput [matDatepicker]="DateLimite" class="w-100"
+                                                            [id]="'date' + i"
+                                                            [(ngModel)]="heuresParametres[i].date"
+                                                            [ngModelOptions]="{standalone: true}">
+                                                        <mat-datepicker-toggle matIconSuffix [for]="DateLimite">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #DateLimite color="primary">
+                                                        </mat-datepicker>
+                                                    </mat-form-field>
+                                                    <div style="width: 42px;">
+                                                        <button class="btn btn-danger" matTooltip="Supprimer"
+                                                            matTooltipPosition="left" (click)="supprimerHeure(i)">
+                                                            <span class="mdi mdi-delete"></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="Temps-Commencement" i18n>Heure de
+                                                                début</label>
+                                                            <input [ngxTimepicker]="tempsCom" type="text"
+                                                                [id]="'heureReunion' + i" class="form-control" readonly
+                                                                [(ngModel)]="heuresParametres[i].heure"
+                                                                [ngModelOptions]="{standalone: true}">
+                                                            <ngx-material-timepicker #tempsCom [theme]="darkTheme">
+                                                            </ngx-material-timepicker>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="form-group">
+                                                            <label for="Temps-Fin" i18n>Durée (heures)</label>
+                                                            <input type="number" class="form-control"
+                                                                [id]="'dureeReunion' + i"
+                                                                [(ngModel)]="heuresParametres[i].duree"
+                                                                [ngModelOptions]="{standalone: true}">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <button class="btn btn-outline-primary w-100 my-2"
+                                                style="border: 1px solid black;" (click)="ajouterHeure()">Ajouter une
+                                                heure</button>
+                                            <br>
+                                            <button class="btn btn-primary w-100 m-0"
+                                                (click)="changementHoraire()">Sauvegarder les
+                                                changements</button>
+                                        </div>
+                                        <div *ngIf="parametreCourant == 'supprimer'">
+                                            <h4>Supprimer la réunion</h4>
+                                            <br>
+                                            <h6>Voulez-vous vraiment supprimer cette réunion? Cette action est
+                                                irreversible!!</h6>
+                                            <br>
+                                            <button class="btn btn-danger w-100"
+                                                (click)="supprimerReunion()">Supprimer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activiteCourante == 'invitations' && enChargement == false" class="p-0">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-12" style="background: rgb(245, 245, 245); height: 600px;">
+                                        <div class="py-2">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <button class="btn btn-outline-primary"
+                                                    (click)="changerActivite('voir')">
+                                                    <span class="mdi mdi-arrow-left"></span>
+                                                </button>
+                                                <h4 class="m-0 flex-grow-1">Invitations</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-2">
+                                            <div class="list-group">
+                                                <div class="list-group-item list-group-item-action "
+                                                    *ngFor="let invitation of lesInvitations; index as i"
+                                                    [class.active]="inviteCourant == i" aria-current="true"
+                                                    (click)="changerOngletInvites(i)">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="image-profil">
+                                                            <span class="mdi mdi-account-multiple-plus-outline"></span>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <div class="d-flex w-100 justify-content-between">
+                                                                <h5 class="m-0">Id: {{ invitation.id_lien }} </h5>
+                                                            </div>
+
+                                                            <small class="text-muted">Limite: {{
+                                                                invitation.date_limite }}, Nom: {{ invitation.nom
+                                                                }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <button class="btn btn-outline-primary w-100 m-0 my-2"
+                                                style="border: 1px solid black;"
+                                                (click)="changerActivite('nouvelleInvitation')">Nouvelle
+                                                Invitation</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 p-3" style="max-height: 600px; overflow-y:auto;">
+                                        <div *ngIf="lesInvitations[inviteCourant] != null">
+                                            <h4>Détails de l'invitation {{ lesInvitations[inviteCourant].id_lien }}</h4>
+                                            <br>
+                                            <h5>Date limite d'utilisation</h5>
+                                            <p class="m-0">{{ lesInvitations[inviteCourant].date_limite }}</p>
+                                            <br>
+                                            <h5>Nom de l'invitateur</h5>
+                                            <p class="m-0">{{ lesInvitations[inviteCourant].nom }}</p>
+                                            <br>
+                                            <h5>Code d'invitation</h5>
+                                            <p class="m-0">{{ lesInvitations[inviteCourant].id_lien }}</p>
+                                            <br>
+                                            <h5>Réunion Cible</h5>
+                                            <p class="m-0">{{ lesInvitations[inviteCourant].id_reunion }} <span
+                                                    class="badge text-bg-secondary">Réunion Courante</span></p>
+                                            <br>
+                                            <button class="btn btn-primary m-0 my-2"
+                                                (click)="copierInvitation(lesInvitations[inviteCourant].id_lien)"><span
+                                                    class="mdi mdi-content-copy"></span> Copier le lien</button>
+                                            <br>
+                                            <button class="btn btn-danger"
+                                                (click)="supprimerInvitation(lesInvitations[inviteCourant].id_lien)">Supprimer</button>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="activiteCourante == 'nouvelleInvitation' && enChargement == false" class="p-0">
+                            <div class="p-2">
+                                <div class="d-flex align-items-center gap-2">
+                                    <button class="btn btn-outline-primary" (click)="changerActivite('voir')">
+                                        <span class="mdi mdi-arrow-left"></span>
+                                    </button>
+                                    <h4 class="m-0 flex-grow-1">Nouvelle Invitation</h4>
+                                </div>
+                            </div>
+
+                            <div class="px-2 row justify-content-center">
+                                <div class="col-12 col-md-6">
+                                    <div style="height: 480px;">
+                                        <form [formGroup]="formulaireInvitation">
+                                            <div class="form-group">
+                                                <label for="inscription-Nom">Nom Complet</label>
+                                                <input type="text" class="form-control {{getClasseValidite('nom')}}"
+                                                    id="inscription-Nom" formControlName="nom">
+                                                <div class="invalid-feedback" i18n>
+                                                    Veuillez entrer un nom complet (Nom et Prénom)
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div>
+                                                <mat-form-field class="w-100">
+                                                    <mat-label>Date Limite de Réponse</mat-label>
+                                                    <input matInput [matDatepicker]="DateLimite" class="w-100"
+                                                        formControlName="date">
+                                                    <mat-datepicker-toggle matIconSuffix [for]="DateLimite">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #DateLimite color="primary"></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <button class="btn btn-primary w-100 py-2 m-0"
+                                        [disabled]="!this.formulaireInvitation.valid"
+                                        (click)="creerInvitation()">Créer</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+</div>

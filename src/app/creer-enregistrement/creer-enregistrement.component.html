@@ -1,0 +1,130 @@
+<div class="contenu">
+    <div class="container">
+        <div>
+            <div class="espacement-page-carte"></div>
+            <a [routerLink]="['/enregistrement']" class="lien-non">
+                <h5 class="pb-2" i18n><span class="mdi mdi-arrow-left"></span> Retour</h5>
+            </a>
+            <div class="card carte-interactive">
+                <div class="row">
+                    <div class="col-12 col-md-6 carte-interactive-image">
+                        <div class="carte-interactive-image-texte"
+                            style="background: linear-gradient(rgba(0,0,0,0.4), rgba(26, 22, 2, 0.8)), url('/assets/img/pages/enregistrement.jpg') center / cover;">
+                            <div class="p-3">
+                                <div class="px-3">
+                                    <h1 class="texte-poppins" i18n>Commencez dès maintenant!</h1>
+                                </div>
+                                <span class="mdi mdi-calendar-plus d-md-block d-none mx-2"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 carte-interactive-contenu">
+                        <div>
+                            <div class="animation-fade">
+                                <div class="d-flex align-items-center gap-3">
+                                    <a class="btn btn-primary" [routerLink]="['/enregistrement']"
+                                        style="background-color: #b37b0d; border-color:#b37b0d"><span
+                                            class="mdi mdi-arrow-left"></span>
+                                    </a>
+                                    <h4 class="m-0" i18n>Nouvel événement</h4>
+                                </div>
+                                <br>
+                                <br>
+                                <p class="text-muted" i18n>Entrez les informations requises, ainsi que votre message.
+                                </p>
+                                <br>
+                                <form [formGroup]="formulaireNouveau">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="Enregistrement-Nom" i18n>Nom</label>
+                                                <input type="text" class="form-control {{getClasseValidite('nom')}}"
+                                                    id="Enregistrement-Nom" formControlName="nom">
+                                                <div class="invalid-feedback" *ngIf="valider('nom')" i18n>
+                                                    Le nom peut seulement contenir des lettres majuscules et minuscules,
+                                                    tirets, apostrophes et espaces
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="Enregistrement-Prenom">Prénom</label>
+                                                <input type="text" class="form-control {{getClasseValidite('prenom')}}"
+                                                    id="Enregistrement-Prenom" formControlName="prenom">
+                                                <div class="invalid-feedback" *ngIf="valider('prenom')" i18n>
+                                                    Le prénom peut seulement contenir des lettres majuscules et
+                                                    minuscules, tirets, apostrophes et espaces
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted" i18n>Entrez votre nom complet tel qu'il apparait sur votre
+                                        passport</small>
+                                    <br>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="Enregistrement-Courriel" i18n>Courriel</label>
+                                        <input type="email"
+                                            class="form-control {{getClasseValidite('courriel')}}"
+                                            id="Enregistrement-Courriel" formControlName="courriel">
+                                        <div class="invalid-feedback" *ngIf="valider('courriel')" i18n>
+                                            Le courriel doit etre valide.
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="Enregistrement-Pass" i18n>Mot de passe</label>
+                                                <input type="password" class="form-control {{getClasseValidite('mdp')}}"
+                                                    id="Enregistrement-Pass" formControlName="mdp">
+                                                <div class="invalid-feedback" *ngIf="valider('mdp')" i18n>
+                                                    Doit contenir au moins 8 caractères, une majuscule, un symbole
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="Enregistrement-PassConf" i18n>Confirmer le mot de
+                                                    passe</label>
+                                                <input type="password"
+                                                    class="form-control {{getClasseValidite('mdpc')}}"
+                                                    id="Enregistrement-PassConf" formControlName="mdpc">
+                                                <div class="invalid-feedback" *ngIf="valider('mdpc')" i18n>
+                                                    Les mots de passe doivent être identiques
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="Enregistrement-Description" i18n>Description</label>
+                                        <textarea class="form-control {{getClasseValidite('description')}}"
+                                            id="Enregistrement-Description" rows="3"
+                                            formControlName="description"></textarea>
+                                        <div class="invalid-feedback" *ngIf="valider('description')" i18n>
+                                            La description est obligatoire (Maximum 250 caractères)
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="Enregistrement-Identifiant" i18n>Identifiant de la rencontre</label>
+                                        <input type="text" class="form-control {{getClasseValidite('identifiant')}}"
+                                            id="EnregistrementIdentifiant" formControlName="identifiant">
+                                        <div class="invalid-feedback" *ngIf="valider('identifiant')" i18n>
+                                            L'identifiant de la rencontre doit contenit 8 lettres majuscules ou chiffres.
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end pt-4">
+                                        <button class="btn btn-primary" [disabled]="!this.formulaireNouveau.valid"
+                                            (click)="envoyerNouveau()" i18n>Continuer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

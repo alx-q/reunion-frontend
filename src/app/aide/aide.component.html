@@ -1,0 +1,129 @@
+<div id="zoneAide" class="zone-droite">
+    <div class="menu-aide" style="width: 100%;">
+        <div class="tete">
+            <div class="d-flex align-items-center gap-2 text-white">
+                <span class="mdi mdi-help-circle mdi-24px"></span>
+                <div class="flex-grow-1 mt-1">
+                    <h5 class="m-0" style="line-height: 15px;" i18n>Aide</h5>
+                    <small class="m-0">{{ titrePage }}</small>
+                </div>
+                <div (click)="fermer()" matTooltip="Fermer" matTooltipPosition="left" class="text-white" role="button"><span
+                        class="mdi mdi-close mdi-24px"></span></div>
+            </div>
+        </div>
+        <div class="p-3 aide-main" style="width: 100%;">
+
+
+            <div *ngIf="defArticle('accueil')">
+                <div class="card mb-3 carte-modifiee">
+                    <div class="carte-image"
+                        style="background: url('/assets/img/aide/bonjour.jpg')  center / cover">
+                    </div>
+                </div>
+                <h5 i18n>Bonjour!</h5>
+                <p i18n>Bienvenue sur ma page d'accueil! Ici, vous découvrirez tout sur moi et mes passions. Je suis ravi de partager avec vous mon univers.</p>
+                <p i18n>Vous trouverez les sections suivantes:</p>
+                <ul>
+                    <li i18n>Couverture</li>
+                    <li i18n>Introduction</li>
+                    <li i18n>Expertise de langages</li>
+                    <li i18n>Projets</li>
+                    <li i18n>Citations célèbres</li>
+                </ul>
+            </div>
+            <div *ngIf="defArticle('Message')">
+                <p i18n>Bienvenue sur notre page d'envoi de message ! Voici quelques étapes pour vous guider :</p>
+                <ol>
+                    <li i18n>Commencez par insérer vos informations dans les champs dédiés.</li>
+                    <li i18n>Ensuite, rédigez votre message dans la zone de texte prévue à cet effet.</li>
+                    <li i18n>Assurez-vous de relire attentivement votre message pour vérifier sa pertinence et son
+                        orthographe.</li>
+                    <li i18n>Une fois votre message prêt, appuyez sur le bouton "Envoyer" pour l'envoyer.</li>
+                </ol>
+                <p i18n>N'hésitez pas à nous contacter si vous avez des questions supplémentaires. Nous sommes là pour vous
+                    aider !</p>
+            </div>
+            <div *ngIf="defArticle('Documentation')" i18n>
+                <p>Bienvenue sur notre page de documentation sur Bootstrap et Angular! Nous sommes ravis de vous aider
+                    dans votre apprentissage de ces deux frameworks populaires.</p>
+                <p>Pour lire un article, veuillez le cliquer.</p>
+                <p>N'hésitez pas à nous contacter si vous avez des questions supplémentaires. Bonne lecture !</p>
+            </div>
+            <div *ngIf="defArticle('Enregistrement')">
+                <div class="card mb-3 carte-modifiee">
+                    <div class="carte-image"
+                        style="background: url('/assets/img/aide/enregistrement.jpg')  center / cover">
+                    </div>
+                </div>
+                <p i18n>Voulez-vous créer un nouvel évènement ou en atteindre un existant aujourd'hui? </p>
+                <p i18n>Selectionnez l'option qui vous convient.</p>
+                <p i18n>Si vous voulez créer un compte, veuillez cliquer sur "Inscription".</p>
+                <p i18n>Si vous avez déjà un compte avec nous, cliquer sur "Connexion".</p>
+            </div>
+            <div *ngIf="defArticle('Creer Reunion')">
+                <div class="card mb-3 carte-modifiee">
+                    <div class="carte-image"
+                        style="background: url('/assets/img/aide/voirenregistrement.jpg')  center / cover">
+                    </div>
+                </div>
+                <p i18n>Bienvenue sur notre page de création de réunion! Voici quelques étapes pour vous guider:</p>
+                <ol>
+                    <li i18n>Commencez par insérer vos informations dans les champs dédiés.</li>
+                    <li i18n>Entrez une brève description de l'évènement</li>
+                    <li i18n>Ajouter un identifiant (8 lettres ou chiffres) pour ensuite permettre à vos collègues de fréquenter l'évènement</li>
+                    <li i18n>Une fois le formulaire rempli, appuyez sur le bouton "Continuer" pour l'envoyer.</li>
+                </ol>
+                <p i18n>N'hésitez pas à nous contacter si vous avez des questions supplémentaires. Nous sommes là pour vous
+                    aider !</p>
+            </div>
+            <div *ngIf="defArticle('Voir Enregistrement')">
+                <div class="card mb-3 carte-modifiee">
+                    <div class="carte-image"
+                        style="background: url('/assets/img/aide/voirenregistrement.jpg')  center / cover">
+                    </div>
+                </div>
+                <h5 i18n>Bienvenue!</h5>
+                <p i18n>Avez-vous reçu une invitation à un évènement de la part de votre collègue? Suivez les étapes suivantes pour le joindre:</p>
+                <ol>
+                    <li i18n>Commencez par entrer l'identifiant de l'évenement fourni par votre collègue.</li>
+                    <li i18n>Entrez votre nom complet tel qu'il apparait sur votre passport</li>
+                    <li i18n>Entrez votre adresse de courriel.</li>
+                    <li i18n>Une fois le formulaire rempli, appuyez sur le bouton "Continuer" pour continuer.</li>
+                </ol>
+                <p i18n>N'hésitez pas à nous contacter si vous avez des questions supplémentaires. Nous sommes là pour vous
+                    aider !</p>
+            </div>
+
+            <div *ngIf="defArticle('Erreur 404')">
+                <div class="card mb-3 carte-modifiee">
+                    <div class="carte-image"
+                        style="background: url('/assets/img/aide/404.jpg')  center / cover">
+                    </div>
+                </div>
+                <h5 i18n>Oups!</h5>
+                <p i18n>La page dont vous cherchez n'existe pas!</p>
+                <p i18n>Mais surpise! Un jeu mystérieux a été débloqué et est prêt à jouer! Ce jeu est seulement disponible pour une durée limitée!</p>
+                <p i18n>N'hésitez pas à nous contacter si vous avez des questions supplémentaires. Nous sommes là pour vous
+                    aider !</p>
+                <h5 i18n>Comment jouer au jeu</h5>
+                <p i18n>Utiliser le clic gauche de la souris pour sauter</p>
+            </div>
+            <div *ngIf="defArticle('Reunion')">
+                <div class="card mb-3 carte-modifiee">
+                    <div class="carte-image"
+                        style="background: url('/assets/img/aide/reunion.jpg')  center / cover">
+                    </div>
+                </div>
+                <h5>Réunissez-vous!</h5>
+                <p i18n>Réunissez-vous aux diverses réunions crées par vos collègues!</p>
+                <p i18n>Vous pouvez créer ou rejoindre une réunion.</p>
+                <p i18n>La création d'un compte est requis pour accèder à ce service.</p>
+            </div>
+
+            <div class="d-grid gap-2 p-3" style="position: absolute; left:0; right:0; bottom:0">
+                <button class="btn btn-light" type="button" routerLink="message"><span
+                        class="mdi mdi-message mdi-16px text-success"></span> Contact</button>
+            </div>
+        </div>
+    </div>
+</div>

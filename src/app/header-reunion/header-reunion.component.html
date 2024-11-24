@@ -1,0 +1,18 @@
+<div *ngIf="estConnecte" class="d-flex align-items-center">
+    <button class="btn btn-outline-primary text-dark" matTooltip="Mes réunions"><span
+            class="mdi mdi-account-group"></span></button>
+    <div class="dropdown ng-star-inserted">
+        <button class="btn btn-outline-primary" [matTooltip]="nomUtilisateur" data-bs-toggle="dropdown">
+            <img src="/assets/img/profiles/{{ nomUtilisateur.charAt(0).toLowerCase() }}.png"
+                class="image-profil-medium vertical-align-bottom m-0" [alt]="nomUtilisateur">
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" (click)="deconnecter()"><span class="mdi mdi-arrow-right"></span> Se déconnecter</a></li>
+        </ul>
+    </div>
+</div>
+
+<div *ngIf="!estConnecte" class="d-flex align-items-center">
+    <a [routerLink]="['/enregistrement']" class="btn btn-primary bouton-connexion">Se connecter</a>
+    
+</div>

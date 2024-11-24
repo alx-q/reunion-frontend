@@ -1,0 +1,279 @@
+swagger: "2.0"
+# Possibilité pour générateur
+# npm install -g redoc-cli
+# Generateur redoc-cli bundle -o index.html swagger.json
+# npm install -g bootprint
+# npm install -g bootprint-base
+# npm install -g bootprint-swagger
+# npm install -g bootprint-openapi
+## Autre test
+# npm install -g @apidevtools/swagger-cli
+### Autre test
+# npm install -g swagger-tools
+
+info:
+  title: Réunions
+  description: API pour les réunions (C) 2023 - Alexander Tudose
+  version: Preview 1
+#host: localhost:8080
+### Pour utiliser la version serverless (Certain API ne sont pas encore porté dans cette environnement)
+#host: us-central1-cegep-al.cloudfunctions.net
+#basePath: /
+### Pour utiliser la version server
+host: us-central1-tp3-alx.cloudfunctions.net
+basePath: /
+#### Definition des securités
+securityDefinitions:
+  # Authorization: abcdef12345
+  APIKeyHeader:
+    type: apiKey
+    in: header
+    name: Authorization
+schemes:
+  - https
+  #- http
+paths:
+  /session:
+    post:
+      summary: Recupere un token du serveur valide pour 1 heures
+      parameters:
+        - in: body
+          name: parameters
+          description: Votre username et password
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Token valide pour 1 heures
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                description: Token
+              error:
+                type: string
+                description: Message d'erreur si il y a lieu
+    delete:
+      summary: Detruit le token du serveur
+      security:
+        - APIKeyHeader: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Token fut detruit
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                description: Token
+              error:
+                type: string
+                description: Message d'erreur si il y a lieu
+  /create_user:
+    post:
+      summary: Crée un utilisateur
+      parameters:
+        - in: body
+          name: parameters
+          description: Votre username et password
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              password:
+                type: string
+              email:
+                type: string
+              key:
+                type: string
+                description: Clef secret pour permettre la creation d'un utilisateur
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Réponse de confirmation
+          schema:
+            type: object
+            properties:
+              data:
+                type: string
+                description: Token
+              error:
+                type: string
+                description: Message d'erreur si il y a lieu
+  /secret:
+    get:
+      summary: Fourni une chaine si le token authenticite est valide. Permet de tester si le token est valide
+      description: Dans un Json.
+      security:
+        - APIKeyHeader: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  valid:
+                    type: boolean
+                    description: Vrai si authenticite est valide
+                  owner:
+                    type: string
+                    description: Username of the owner
+                  message:
+                    type: string
+                    description: 42 est la reponse a tout!
+
+  /reunion?type=ajouterReunion:
+    post:
+        summary: Crée une reunion
+        parameters:
+          - in: body
+            name: parameters
+            description: Informations Obligatoires!!!!
+            schema:
+              type: object
+              properties:
+                info: 
+                  type: object
+                  properties: 
+                    titre: 
+                      type: string
+                    nom: 
+                      type: string
+                    description: 
+                      type: string
+                    lieu: 
+                      type: string
+                    couleur: 
+                      type: integer
+                      format: int32
+                    date_limite: 
+                      type: string
+                      format: date
+                    utilisateur: 
+                      type: string
+                    mdp: 
+                      type: string
+                    heures: 
+                      type: array
+                      items: 
+                        type: object
+                        properties: 
+                          date: 
+                            type: string
+                            format: date
+                          heure: 
+                            type: string
+                          duree: 
+                            type: integer
+                            format: int32
+
+        produces:
+          - application/json
+        responses:
+          200:
+            description: Réponse de confirmation
+            schema:
+              type: object
+              properties:
+                success: 
+                  type: boolean
+
+
+  /reunion?type=voirReunions:
+    get:
+      summary: Montre toutes les reunions d'un utilisateur
+      description: Dans un Json.
+      security:
+        - APIKeyHeader: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+
+  /reunion?type=voirReunion&id_reunion=1703016430454:
+    get:
+      summary: Montre toutes les infos pour une reunion
+      description: Dans un Json.
+      security:
+        - APIKeyHeader: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+  /reunion?type=accepterHeure:
+    post:
+      parameters:
+        - in: body
+          name: parameters
+          description: Informations Obligatoires!!!!
+          schema:
+            type: object
+            properties:
+              id_heure: 
+                type: number
+              id_user: 
+                type: string
+      summary: Confirme ou décline la présence. Si c'est true, ça vient à false, et vice versa
+      description: Dans un Json.
+      security:
+        - APIKeyHeader: []
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+
+
+  /reunion?type=supprimerReunion&id_reunion=179023840294389:
+      delete:
+        summary: Supprime un reunion. Doit etre admin
+        description: Dans un Json.
+        security:
+          - APIKeyHeader: []
+        produces:
+          - application/json
+        responses:
+          200:
+            description: OK
+
+  /reunion?type=supprimerUsername&id_reunion=179023840294389&username=alex:
+      delete:
+        summary: Supprime expulse une personne d'une reunion.
+        description: Dans un Json.
+        security:
+          - APIKeyHeader: []
+        produces:
+          - application/json
+        responses:
+          200:
+            description: OK
+  /reunion?type=supprimerInvite&id_reunion=179023840294389&id_lien=q4jvos5Geo:
+      delete:
+        summary: Supprime expulse une personne d'une reunion.
+        description: Dans un Json.
+        security:
+          - APIKeyHeader: []
+        produces:
+          - application/json
+        responses:
+          200:
+            description: OK

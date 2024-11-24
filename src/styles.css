@@ -1,1 +1,296 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400%3B500%3B600%3B700%3B800%3B900&family=Rajdhani:wght@700&display=swap');
+
+/* Cartes */
+
+.card.carte-modifiee>.carte-image {
+    width: 100%;
+    border-radius: 5px;
+    height: 150px;
+}
+
+.card.carte-modifiee>.carte-image>h6 {
+    padding: 115px 15px 15px 15px;
+}
+
+.carte-interactive>.row {
+    min-height: 500px;
+}
+
+.carte-interactive>.row>.carte-interactive-image {
+    color: white;
+    position: relative;
+    min-height: 160px;
+}
+
+.carte-interactive-image>.carte-interactive-image-texte {
+    border-radius: 5px 0 0 5px;
+    height: 100%;
+    width: 100%;
+}
+
+.carte-interactive-image>.carte-interactive-image-texte>div {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.carte-interactive-image>.carte-interactive-image-texte>div>.mdi {
+    font-size: 160px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 160px;
+}
+
+.carte-interactive-contenu {
+    min-height: 600px;
+}
+
+.carte-interactive-contenu>div {
+    padding: 18px 18px 18px 8px;
+    min-height: 500px;
+}
+
+.carte-interactive-banniere {
+    padding: 8px 18px;
+    border-radius: 5px 0 0 5px;
+    width: 64px;
+}
+
+.carte-interactive-banniere>.mdi {
+    font-size: 28px;
+    color: white;
+}
+
+.pl-0 {
+    padding-left: 0 !important;
+}
+
+
+
+@media (min-width: 768px) {
+    .pl-md-0 {
+        padding-left: 0px !important;
+    }
+    .pr-md-0 {
+        padding-right: 0px !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .carte-interactive-contenu>div {
+        padding: 20px 20px 20px 20px;
+    }
+}
+
+.animation-carte {
+    animation: afficherCarte 0.8s forwards ease-in-out 0.3s;
+    position: relative;
+    opacity: 0;
+}
+
+@keyframes afficherCarte {
+    0% {
+        opacity: 0;
+        bottom: -50px;
+        transform: scale(0.99);
+    }
+
+    100% {
+        opacity: 1;
+        bottom: 0;
+    }
+}
+
+/* Liens */
+
+.lien-non {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Sections */
+
+section {
+    padding: 40px 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+section>.section-contenu {
+    max-width: 1280px;
+    margin: auto;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Texte */
+
+.texte-poppins {
+    font-family: "Poppins";
+}
+
+.texte-raj {
+    font-family: "Rajdhani";
+}
+
+/* Contenu */
+.contenu {
+    min-height: 100vh;
+}
+
+.espacement-page-carte {
+    height: 120px;
+}
+
+/* Boutons */
+
+button.btn.bouton-joindre {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    border-color: #0f8336;
+    color: #0f8336;
+}
+
+button.btn.bouton-creer {
+    width: 100%;
+    min-height: 200px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    border-color: #1669ac;
+    color: #1669ac;
+}
+
+.bouton-joindre>.mdi,
+.bouton-creer>.mdi {
+    font-size: 40px;
+    line-height: 48px;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mdc-tooltip__surface {
+    padding: 10px 10px !important;
+}
+
+
+
+.modal-backdrop {
+    display: none !important;
+}
+
+.alerte-centre {
+    height: 550px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+
+
+
+.btn.btn-outline-primary {
+    padding: 5px 8px;
+    border: none;
+}
+
+.btn.btn-outline-primary.show {
+    background-color: rgba(128, 128, 128, 0.295);
+}
+
+.btn.btn-outline-primary>.mdi {
+    font-size: 22px;
+}
+
+.btn.btn-outline-primary.bouton-profil {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    border: 2px solid;
+    margin-left: 11px;
+    background: url("/assets/img/profil.png") center / cover;
+}
+
+.btn.btn-outline-primary.bouton-profil::after{
+    display: none;
+}
+
+.btn.btn-primary {
+    margin: 0 6px;
+}
+
+.btn-outline-primary:hover{
+    background-color: rgba(128, 128, 128, 0.308) !important;
+}
+
+
+.mat-mdc-form-field-subscript-wrapper{
+    display: none !important;
+}
+
+
+.image-profil{
+    width: 38px; 
+    height: 38px; 
+    border-radius: 50%; 
+    margin-right: 3px;
+}
+
+.image-profil-mini{
+    width: 22px; 
+    height: 22px; 
+    border-radius: 50%; 
+    margin-right: 6px;
+}
+
+.image-profil-medium{
+    width: 28px; 
+    height: 28px; 
+    border-radius: 50%; 
+    margin-right: 6px;
+}
+
+.image-profil-mini-2{
+    width: 18px; 
+    height: 18px; 
+    border-radius: 50%; 
+    margin-right: 6px;
+}
+
+.ecran-chargement{
+    height: auto; 
+    position: absolute; 
+    top:0; 
+    left:0; 
+    bottom:0; 
+    right:0; 
+    backdrop-filter: blur(30px); 
+    z-index: 10; 
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.397);
+    animation: afficher-chargement 0.5s ease-in-out forwards;
+}
+
+
+.ecran-chargement.ecran-chargement-noir{
+    background-color: rgba(54, 54, 54, 0.397);
+}
+
+
+@keyframes afficher-chargement {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}

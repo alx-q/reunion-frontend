@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+
+.section-404{
+    margin-top: 59px;
+    height: calc(100vh - 59px);
+}
+
+.bouton-jouer{
+    font-size: 36px; 
+    font-family: 'Silkscreen'; 
+    padding: 10px 20px;
+}
+
+.texte-jeu{
+    font-family: 'Silkscreen'; 
+}
+
+.jeu{
+    position: relative;
+}
+
+.jeu.cacher{
+    display: none;
+}
+
+.jeu-header{
+    font-family: 'Silkscreen'; 
+    background-color: rgb(60, 99, 100);
+    color: white;
+    height: 56px;
+    padding: 16px 18px;
+    position: absolute;
+    top:0;
+    line-height: 20px;
+    font-size: 24px;
+}
+
+.jeu-header > .mdi{
+    font-size: 28px;
+}
+
+.jeu-header-gauche{
+    border-radius: 0 0 5px 0;
+    left:0;
+}
+
+.jeu-header-droite{
+    border-radius: 0 0 0 5px;
+    right:0
+}
+
+.jeu-jeu{
+    position: relative;
+}
+
+.jeu-jeu > canvas{
+    width: 400px; height: 717px; background-color:white
+}
+
+.jeu-pause{
+    position: absolute; 
+    left:0; 
+    right:0; 
+    top:0; 
+    bottom:0;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+}
